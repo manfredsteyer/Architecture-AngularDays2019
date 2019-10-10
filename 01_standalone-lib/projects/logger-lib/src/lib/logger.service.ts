@@ -1,5 +1,6 @@
 import { Injectable, Optional, Inject } from '@angular/core';
 import { LoggerConfig } from './logger.config';
+import { LogFormatter } from './log.formatter';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,7 @@ import { LoggerConfig } from './logger.config';
 export class LoggerService {
 
   constructor(
+    private formatter: LogFormatter,
     @Optional() private config: LoggerConfig) {
   }
 
@@ -17,11 +19,11 @@ export class LoggerService {
     }
 
     // tslint:disable-next-line:no-console
-    console.debug('DEBUG: ', message);
+    console.debug('DEBUG: ', this.formatter.format(message));
   }
 
   log(message: string): void {
-    console.log('LOG: ', message);
+    console.log('LOG: ', this.formatter.format(message));
   }
 
 }
